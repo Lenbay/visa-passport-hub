@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通行图谱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260503-map-passport-aligned">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" id="brandHomeLink" href="#home" aria-label="返回首页">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="assets/logo-orbit.svg" alt="">
+      </span>
+      <span id="brandText">通行图谱</span>
+    </a>
+    <div class="header-actions">
+      <nav class="nav-links" aria-label="主导航">
+        <button class="top-tab is-active" type="button" data-view="home" data-i18n="navHome">首页</button>
+        <button class="top-tab" type="button" data-view="immigration">移民</button>
+        <button class="top-tab" type="button" data-view="visa">签证</button>
+        <button class="top-tab" type="button" data-view="passport">护照</button>
+      </nav>
+      <div class="language-menu" id="languageMenu">
+        <button class="language-toggle" id="languageToggle" type="button" aria-label="切换语言" aria-haspopup="listbox" aria-expanded="false">
+          <span class="language-flag" id="languageFlag" aria-hidden="true">🇨🇳</span>
+          <span id="languageLabel">中文</span>
+          <span class="language-caret" aria-hidden="true"></span>
+        </button>
+        <div class="language-list" id="languageList" role="listbox" aria-label="选择语言"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section id="home" class="home-blueprint view-home">
+      <div class="home-copy">
+        <p class="eyebrow" data-i18n="homeEyebrow">World Blueprint</p>
+        <h1 data-i18n="homeTitle">用一张世界蓝图浏览所有目的地。</h1>
+        <p data-i18n="homeText">把国家和地区平铺成一张可探索的蓝图。鼠标悬浮任意国家，即可快速查看它已维护的移民路径和签证类型。</p>
+        <label class="home-search">
+          <span data-i18n="homeSearchLabel">你想前往哪里？</span>
+          <input id="homeSearchInput" type="search" data-i18n-placeholder="homeSearchPlaceholder" placeholder="搜索国家、签证或护照目的地" autocomplete="off" aria-controls="homeSearchSuggestions" aria-expanded="false">
+          <div class="home-search-suggestions" id="homeSearchSuggestions" role="listbox"></div>
+        </label>
+        <div class="home-badges" aria-label="平台能力">
+          <span data-i18n="homeBadgeVisa">签证资料库</span>
+          <span data-i18n="homeBadgeImmigration">移民路径</span>
+          <span data-i18n="homeBadgePassport">护照出行</span>
+        </div>
+      </div>
+      <div class="blueprint-shell">
+        <div class="blueprint-map" id="blueprintMap" aria-label="Folium 世界国家地图"></div>
+        <div class="map-tooltip" id="mapTooltip" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="site-intro view-home">
+      <div>
+        <p class="eyebrow" data-i18n="introEyebrow">About</p>
+        <h2 data-i18n="introTitle">一个同时管理移民与签证规则的网站。</h2>
+      </div>
+      <div class="intro-cards">
+        <article>
+          <span data-i18n="introOneTag">资料库</span>
+          <h3 data-i18n="introOneTitle">按国家统一收纳</h3>
+          <p data-i18n="introOneText">每个国家和地区都能维护移民、签证、官方来源、更新时间和关键申请条件。</p>
+        </article>
+        <article>
+          <span data-i18n="introTwoTag">检索</span>
+          <h3 data-i18n="introTwoTitle">先看地图，再进详情</h3>
+          <p data-i18n="introTwoText">首页适合快速发现目的地，下方资料库适合筛选、搜索和展开阅读完整规则。</p>
+        </article>
+        <article>
+          <span data-i18n="introThreeTag">维护</span>
+          <h3 data-i18n="introThreeTitle">为更新留好位置</h3>
+          <p data-i18n="introThreeText">页面预留最后核验日期和官方链接，方便后续接入后台、表格或人工审核流程。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-switcher is-hidden" aria-label="业务类型">
+      <button class="product-tab is-active" type="button" data-product="immigration">移民</button>
+      <button class="product-tab" type="button" data-product="visa">签证</button>
+    </section>
+
+    <section class="section-subnav view-database is-hidden" aria-label="页面二级导航">
+      <a href="#countries" data-i18n="navCountries">国家规则</a>
+      <a href="#watchlist" data-i18n="navWatchlist">重点提醒</a>
+      <a href="#sources" data-i18n="navSources">官方来源</a>
+    </section>
+
+    <section class="hero view-database is-hidden">
+      <div class="hero-copy">
+        <p class="eyebrow" id="heroEyebrow">Immigration Rules Hub</p>
+        <h1 data-i18n="heroTitle">把各国移民规则集中在一个可检索、可展开的页面里。</h1>
+        <p data-i18n="heroText">每个国家是一块独立信息区。页面会根据屏幕宽度自动排列，电脑上一行显示多个，手机上单列阅读，点击即可展开详细规则。</p>
+      </div>
+      <aside class="status-panel" aria-label="资料库状态">
+        <div>
+          <span class="status-number" id="countryCount">0</span>
+          <span class="status-label" data-i18n="countryCountLabel">个国家/地区</span>
+        </div>
+        <div>
+          <span class="status-number" id="categoryCount">4</span>
+          <span class="status-label" data-i18n="pathCountLabel">类移民路径</span>
+        </div>
+        <div>
+          <span class="status-number">2026</span>
+          <span class="status-label" data-i18n="yearLabel">可标记更新年份</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="visa-passport-panel view-database is-hidden" id="visaPassportPanel" aria-label="签证护照国家设置">
+      <label class="visa-passport-picker">
+        <span id="visaPassportPickerLabel">设置护照国家</span>
+        <select id="visaPassportSelect"></select>
+      </label>
+      <div class="visa-passport-stats" id="visaPassportStats" aria-live="polite"></div>
+    </section>
+
+    <section id="countries" class="workspace view-database is-hidden">
+      <div class="toolbar" aria-label="筛选工具">
+        <label class="search-box">
+          <span data-i18n="searchLabel">搜索国家或关键词</span>
+          <input id="searchInput" type="search" placeholder="例如：加拿大、技术移民、投资、留学" autocomplete="off">
+        </label>
+        <div class="filter-group" id="filterGroup" aria-label="规则分类">
+          <button class="filter-pill is-active" type="button" data-filter="all">全部</button>
+          <button class="filter-pill" type="button" data-filter="skilled">技术</button>
+          <button class="filter-pill" type="button" data-filter="business">商业</button>
+          <button class="filter-pill" type="button" data-filter="study">留学</button>
+          <button class="filter-pill" type="button" data-filter="family">家庭</button>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Countries</p>
+          <h2 data-i18n="countriesTitle">国家规则</h2>
+        </div>
+        <p data-i18n="countriesText">下方内容适合作为你的资料库模板：可记录最新更新时间、适合人群、核心条件、费用周期和官方链接。</p>
+      </div>
+
+      <div class="country-grid" id="countryGrid" aria-live="polite"></div>
+      <p class="empty-state" id="emptyState" hidden>没有找到匹配的国家或规则。换个关键词试试。</p>
+    </section>
+
+    <section id="watchlist" class="watchlist view-database is-hidden">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Watchlist</p>
+          <h2 data-i18n="watchlistTitle">重点提醒</h2>
+        </div>
+        <p data-i18n="watchlistText">适合放置最近变更、配额关闭、申请费调整、语言要求更新等需要优先核验的信息。</p>
+      </div>
+      <div class="notice-grid">
+        <article>
+          <span class="notice-tag" data-i18n="noticeOneTag">更新频率</span>
+          <h3 data-i18n="noticeOneTitle">给每条规则保留“最后核验日期”</h3>
+          <p data-i18n="noticeOneText">移民政策变化快，页面中的更新时间应来自官方公告或持牌顾问核验记录。</p>
+        </article>
+        <article>
+          <span class="notice-tag" data-i18n="noticeTwoTag">资料来源</span>
+          <h3 data-i18n="noticeTwoTitle">优先链接官方移民局页面</h3>
+          <p data-i18n="noticeTwoText">每个国家卡片都预留官方来源按钮，方便用户跳转确认原文。</p>
+        </article>
+        <article>
+          <span class="notice-tag" data-i18n="noticeThreeTag">免责声明</span>
+          <h3 data-i18n="noticeThreeTitle">页面可展示信息，不替代法律意见</h3>
+          <p data-i18n="noticeThreeText">正式申请前应再次核对官方规则，并咨询合资格专业人士。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="sources" class="sources view-database is-hidden">
+      <p class="eyebrow">Sources</p>
+      <h2 data-i18n="sourcesTitle">官方来源管理</h2>
+      <p data-i18n="sourcesText">建议把所有官方来源、更新时间和编辑人维护在同一份表格或后台中，再同步到这个页面。当前版本使用前端数据演示，方便你先确认页面效果。</p>
+    </section>
+
+    <section id="countryDetail" class="country-detail-page is-hidden" aria-live="polite">
+      <button class="back-button" id="detailBackButton" type="button">返回列表</button>
+      <div id="countryDetailContent"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span data-i18n="footerBrand">全球移民规则库</span>
+    <span data-i18n="footerNote">信息展示模板，仅供搭建资料库使用。</span>
+  </footer>
+
+  <script src="passport-official-data.js?v=20260502-henley-2026"></script>
+  <script src="visa-sherpa-data.js?v=20260502-sherpa-passport-switcher"></script>
+  <script src="script.js?v=20260503-passport-search-issuer-only"></script>
+</body>
+</html>
