@@ -1345,6 +1345,15 @@ input {
   font-weight: 800;
 }
 
+.site-disclaimer {
+  flex: 1 0 100%;
+  margin: 0;
+  max-width: 920px;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
 @media (max-width: 900px) {
   .site-header,
   .home-copy,
